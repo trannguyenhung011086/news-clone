@@ -5,7 +5,7 @@ const PostModel = require('../models/post');
 const UserService = require('./user');
 
 const getPostById = async postId => {
-    const id = mongoose.Types.ObjectId(postId);
+    const id = new mongoose.Types.ObjectId(postId);
     return await PostModel.findById(id);
 };
 
@@ -59,7 +59,9 @@ module.exports = {
             throw err;
         }
         const payload = await validatePost({ title, type, content, user });
-        return await PostModel.findOneAndUpdate({ _id: post._id }, payload);
+        return await PostModel.findOneAndUpdate({ _id: post._id }, payload, {
+            new: true,
+        });
     },
 
     deletePost: async ({ postId, user }) => {

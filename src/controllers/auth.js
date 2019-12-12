@@ -1,3 +1,5 @@
+const AuthService = require('../services/auth');
+
 module.exports = {
     activate: async (req, res, next) => {
         try {
@@ -9,7 +11,9 @@ module.exports = {
 
     sigin: async (req, res, next) => {
         try {
-            res.send('TO DO');
+            const { email, password } = req.body;
+            const token = await AuthService.signIn({ email, password });
+            res.json(token);
         } catch (err) {
             return next(err);
         }

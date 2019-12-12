@@ -1,16 +1,16 @@
 const UserService = require('../services/user');
+const AuthService = require('../services/auth');
 
 module.exports = {
     register: async (req, res, next) => {
         try {
             const { username, email, password } = req.body;
-            const payload = await UserService.validateRegister({
+            const user = await UserService.createUser({
                 username,
                 email,
                 password,
             });
-            const user = await UserService.createUser(payload);
-            const token = UserService.grantToken({
+            const token = AuthService.grantToken({
                 userId: user._id,
                 username: user.username,
             });

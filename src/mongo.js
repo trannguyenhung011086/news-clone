@@ -1,11 +1,23 @@
 const config = require('./config');
 const mongoose = require('mongoose');
 
-mongoose.connect(config.database, {
+const options = {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
-});
+    useFindAndModify: false,
+};
+mongoose.connect(config.database, options);
+
+// if (process.env.NODE_ENV === 'development') {
+//     const { MongoMemoryServer } = require('mongodb-memory-server');
+//     const mongod = new MongoMemoryServer();
+//     mongod.getConnectionString().then(uri => {
+//         mongoose.connect(uri, options);
+//     });
+// } else {
+//     mongoose.connect(config.database, options);
+// }
 
 const db = mongoose.connection;
 
