@@ -36,12 +36,13 @@ module.exports = {
     createUser: async ({ username, email, password }) => {
         const payload = { username, email, password };
         await validateRegister(payload);
-        payload.password = await bcrypt.hash(password, 10);
 
         const user = await getUserByEmail(email);
         if (user) {
             throw new Error('User already registered!');
         }
+
+        payload.password = await bcrypt.hash(password, 10);
 
         return await UserModel.create(payload);
     },

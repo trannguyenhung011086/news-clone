@@ -10,15 +10,12 @@ module.exports = {
                 email,
                 password,
             });
-            const token = AuthService.grantToken({
-                userId: user._id,
-                username: user.username,
-            });
 
             res.json({
-                _id: user._id,
-                username: user.username,
-                accessToken: token.accessToken,
+                username,
+                email,
+                id: user._id,
+                active: user.active,
             });
         } catch (err) {
             return next(err);

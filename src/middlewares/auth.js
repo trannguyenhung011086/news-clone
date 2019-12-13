@@ -1,4 +1,5 @@
 const AuthService = require('../services/auth');
+const PostService = require('../services/post');
 
 const getToken = req => {
     let token = req.headers['x-access-token'] || req.headers['authorization'];
@@ -17,9 +18,5 @@ module.exports = {
             return res.status(err.status).json(err);
         }
         next();
-    },
-
-    isOwner: async (req, res, next) => {
-        //
     },
 };

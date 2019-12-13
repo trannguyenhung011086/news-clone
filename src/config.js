@@ -1,6 +1,12 @@
 require('dotenv').config();
 
 module.exports = {
+    mongoOptions: {
+        useNewUrlParser: true,
+        useCreateIndex: true,
+        useUnifiedTopology: true,
+        useFindAndModify: false,
+    },
     jwtSecret: process.env.JWTSECRET,
     accessTokenSecret: process.env.ACCESSTOKENSECRET,
     refreshTokenSecret: process.env.REFRESHTOKENSECRET,

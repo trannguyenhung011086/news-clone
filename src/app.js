@@ -16,7 +16,10 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(new morgan('dev'));
+
+if (process.env === 'development') {
+    app.use(new morgan('dev'));
+}
 
 app.use('/', homeRoute);
 app.use('/auth', authRoute);

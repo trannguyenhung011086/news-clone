@@ -12,7 +12,7 @@ const grantToken = ({ userId, username }) => {
     const refreshToken = jwt.sign(payload, config.refreshTokenSecret, {
         expiresIn: config.refreshTokenLife,
     });
-    return { accessToken, refreshToken };
+    return { userId, accessToken, refreshToken };
 };
 
 module.exports = {
