@@ -8,6 +8,7 @@ const CommentSchema = new mongoose.Schema(
         },
         score: {
             type: Number,
+            required: true,
             default: 0,
         },
         post: {
@@ -20,6 +21,7 @@ const CommentSchema = new mongoose.Schema(
         },
         user: {
             type: mongoose.Schema.ObjectId,
+            required: true,
             ref: 'User',
         },
         createdAt: {

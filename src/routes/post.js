@@ -13,5 +13,10 @@ router.put('/:postId', AuthMiddleware.isUser, PostController.updatePost);
 router.delete('/:postId', AuthMiddleware.isUser, PostController.deletePost);
 
 router.get('/:postId/comments', CommentController.getPostComments);
+router.post('/:postId/comments/create', CommentController.createComment);
+router.post(
+    '/:postId/:commentId/comments/create',
+    CommentController.createComment,
+);
 
 module.exports = router;

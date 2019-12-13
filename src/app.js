@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-if (process.env === 'development') {
+if (process.env.NODE_ENV === 'development') {
     app.use(new morgan('dev'));
 }
 

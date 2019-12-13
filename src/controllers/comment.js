@@ -23,4 +23,21 @@ module.exports = {
             next(err);
         }
     },
+
+    createComment: async (req, res, next) => {
+        try {
+            const { postId } = req.params;
+            const { content, parentId, userId } = req.body;
+            const comment = await CommentService.createComment({
+                content,
+                parentId,
+                postId,
+                userId,
+            });
+
+            res.json(comment);
+        } catch (err) {
+            next(err);
+        }
+    },
 };
