@@ -21,7 +21,22 @@ const validateComment = async ({ content, parentId, postId, userId }) => {
 
 const getCommentById = async commentId => {
     const id = new mongoose.Types.ObjectId(commentId);
-    return await CommentModel.findById(id);
+    const comment = await CommentModel.findById(id);
+
+    if (!comment) {
+        throw new Error('Comment not found!');
+    }
+    return comment;
+};
+
+const checkCommentOwner = (comment, userId) => {
+    if (comment.user.toString() != userId) {
+        const err = {
+            status: 401,
+            message: 'Comment does not belong to user!',
+        };
+        throw err;
+    }
 };
 
 module.exports = {
@@ -45,19 +60,8 @@ module.exports = {
             throw new Error('User not found!');
         }
 
-        if (postId) {
-            const findPost = await PostService.getPostById(postId);
-            if (!findPost) {
-                throw new Error('Post not found!');
-            }
-        }
-
-        if (parentId) {
-            const findParent = await getCommentById(parentId);
-            if (!findParent) {
-                throw new Error('Comment not found!');
-            }
-        }
+        if (postId) await PostService.getPostById(postId);
+        if (parentId) await getCommentById(parentId);
 
         await validateComment({
             content,
@@ -73,5 +77,35 @@ module.exports = {
         });
         comment = await CommentModel.populate(comment, ['replies', 'user']);
         return comment;
+    },
+
+    updateComment: async ({ content, commentId, parentId, postId, userId }) => {
+        const comment = await getCommentById(commentId);
+        checkCommentOwner(comment, userId);
+
+        if (postId) await PostService.getPostById(postId);
+        if (parentId) await getCommentById(parentId);
+
+        await validateComment({
+            content,
+            parentId,
+            postId,
+            userId,
+        });
+
+        comment.content = content;
+        return await comment.save();
+    },
+
+    upvoteComment: async commentId => {
+        const comment = await getCommentById(commentId);
+        comment.score += 1;
+        return await comment.save();
+    },
+
+    downvoteComment: async commentId => {
+        const comment = await getCommentById(commentId);
+        comment.score -= 1;
+        return await comment.save();
     },
 };

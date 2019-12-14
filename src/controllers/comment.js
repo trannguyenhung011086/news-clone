@@ -26,8 +26,8 @@ module.exports = {
 
     createComment: async (req, res, next) => {
         try {
-            const { postId } = req.params;
-            const { content, parentId, userId } = req.body;
+            const { postId, parentId } = req.params;
+            const { content, userId } = req.body;
             const comment = await CommentService.createComment({
                 content,
                 parentId,
@@ -36,6 +36,44 @@ module.exports = {
             });
 
             res.json(comment);
+        } catch (err) {
+            next(err);
+        }
+    },
+
+    updateComment: async (req, res, next) => {
+        try {
+            const { commentId, postId, parentId } = req.params;
+            const { content, userId } = req.body;
+            const comment = await CommentService.updateComment({
+                content,
+                commentId,
+                parentId,
+                postId,
+                userId,
+            });
+
+            res.json(comment);
+        } catch (err) {
+            next(err);
+        }
+    },
+
+    upvoteComment: async (req, res, next) => {
+        try {
+            const { commentId } = req.params;
+            const comment = await CommentService.upvoteComment(commentId);
+            res.json({ data: { voteCount: comment.score } });
+        } catch (err) {
+            next(err);
+        }
+    },
+
+    downvoteComment: async (req, res, next) => {
+        try {
+            const { commentId } = req.params;
+            const comment = await CommentService.downvoteComment(commentId);
+            res.json({ data: { voteCount: comment.score } });
         } catch (err) {
             next(err);
         }

@@ -61,4 +61,24 @@ module.exports = {
             return next(err);
         }
     },
+
+    upvotePost: async (req, res, next) => {
+        try {
+            const { postId } = req.params;
+            const post = await PostService.upvotePost(postId);
+            res.json({ data: { voteCount: post.score } });
+        } catch (err) {
+            next(err);
+        }
+    },
+
+    downvotePost: async (req, res, next) => {
+        try {
+            const { postId } = req.params;
+            const post = await PostService.downvotePost(postId);
+            res.json({ data: { voteCount: post.score } });
+        } catch (err) {
+            next(err);
+        }
+    },
 };

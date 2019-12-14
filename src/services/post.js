@@ -6,7 +6,12 @@ const UserService = require('./user');
 
 const getPostById = async postId => {
     const id = new mongoose.Types.ObjectId(postId);
-    return await PostModel.findById(id);
+    const post = await PostModel.findById(id);
+
+    if (!post) {
+        throw new Error('Post not found!');
+    }
+    return post;
 };
 
 const validatePost = async ({ title, type, content, user }) => {
@@ -25,6 +30,17 @@ const validatePost = async ({ title, type, content, user }) => {
     await schema.validate(payload);
 
     return payload;
+};
+
+const checkPostOwner = (post, user) => {
+    if (post.user.toString() != user) {
+        const err = {
+            status: 401,
+            message: 'Post does not belong to user!',
+        };
+        throw err;
+    }
+    return;
 };
 
 module.exports = {
@@ -48,35 +64,32 @@ module.exports = {
 
     updatePost: async ({ postId, title, type, content, user }) => {
         const post = await getPostById(postId);
-        if (!post) {
-            throw new Error('Post not found!');
-        }
-        if (post.user.toString() != user) {
-            const err = {
-                status: 401,
-                message: 'Post does not belong to user!',
-            };
-            throw err;
-        }
-        const payload = await validatePost({ title, type, content, user });
-        return await PostModel.findOneAndUpdate({ _id: post._id }, payload, {
-            new: true,
-        });
+        checkPostOwner(post, user);
+
+        await validatePost({ title, type, content, user });
+
+        post.title = title;
+        post.type = type;
+        post.content = content;
+        return await post.save();
     },
 
     deletePost: async ({ postId, user }) => {
         const post = await getPostById(postId);
-        if (!post) {
-            throw new Error('Post not found!');
-        }
-        if (post.user.toString() != user) {
-            const err = {
-                status: 401,
-                message: 'Post does not belong to user!',
-            };
-            throw err;
-        }
+        checkPostOwner(post, user);
 
         await PostModel.deleteOne({ _id: postId });
+    },
+
+    upvotePost: async postId => {
+        const post = await getPostById(postId);
+        post.score += 1;
+        return await post.save();
+    },
+
+    downvotePost: async postId => {
+        const post = await getPostById(postId);
+        post.score -= 1;
+        return await post.save();
     },
 };
