@@ -7,7 +7,6 @@ module.exports = {
         useUnifiedTopology: true,
         useFindAndModify: false,
     },
-    jwtSecret: process.env.JWTSECRET,
     accessTokenSecret: process.env.ACCESSTOKENSECRET,
     refreshTokenSecret: process.env.REFRESHTOKENSECRET,
     accessTokenLife: process.env.ACCESSTOKENLIFE,

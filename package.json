@@ -8,6 +8,7 @@
         "compileEnhancements": true
     },
     "scripts": {
+        "build": "netlify-lambda build src",
         "test": "echo \"Error: no test specified\" && exit 1",
         "dev": "NODE_ENV=development node_modules/.bin/nodemon src/index.js"
     },
@@ -36,6 +37,7 @@
         "morgan": "^1.9.1",
         "node-fetch": "^2.6.0",
         "redis": "^2.8.0",
+        "serverless-http": "^2.3.0",
         "test-listen": "^1.1.0",
         "yup": "^0.27.0"
     },

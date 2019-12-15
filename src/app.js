@@ -1,3 +1,4 @@
+const serverless = require('serverless-http');
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
@@ -21,10 +22,12 @@ if (process.env.NODE_ENV === 'development') {
     app.use(new morgan('dev'));
 }
 
-app.use('/', homeRoute);
-app.use('/auth', authRoute);
-app.use('/user', userRoute);
-app.use('/posts', postRoute);
+const netlifyUrl = '/.netlify/functions';
+
+app.use(netlifyUrl + '/', homeRoute);
+app.use(netlifyUrl + '/auth', authRoute);
+app.use(netlifyUrl + '/user', userRoute);
+app.use(netlifyUrl + '/posts', postRoute);
 
 app.use('*', (req, res) => {
     res.status(404).json({ message: 'Not found!' });
