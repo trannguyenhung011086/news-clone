@@ -1,4 +1,3 @@
-const serverless = require('serverless-http');
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
@@ -6,10 +5,10 @@ const morgan = require('morgan');
 
 const errorHandler = require('./middlewares/handleError');
 
-const homeRoute = require('./routes/home');
-const authRoute = require('./routes/auth');
-const userRoute = require('./routes/user');
-const postRoute = require('./routes/post');
+// const homeRoute = require('./routes/home');
+// const authRoute = require('./routes/auth');
+// const userRoute = require('./routes/user');
+// const postRoute = require('./routes/post');
 
 const app = express();
 
@@ -22,18 +21,15 @@ if (process.env.NODE_ENV === 'development') {
     app.use(new morgan('dev'));
 }
 
-const netlifyUrl = '/.netlify/functions';
+// app.use('/', homeRoute);
+// app.use('/auth', authRoute);
+// app.use('/user', userRoute);
+// app.use('/posts', postRoute);
 
-app.use(netlifyUrl + '/', homeRoute);
-app.use(netlifyUrl + '/auth', authRoute);
-app.use(netlifyUrl + '/user', userRoute);
-app.use(netlifyUrl + '/posts', postRoute);
-
-app.use('*', (req, res) => {
-    res.status(404).json({ message: 'Not found!' });
-});
+// app.use('*', (req, res) => {
+//     res.status(404).json({ message: 'Not found!' });
+// });
 
 app.use(errorHandler);
 
 module.exports = app;
-module.exports.handler = serverless(app);

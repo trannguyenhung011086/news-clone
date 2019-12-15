@@ -8,7 +8,8 @@
         "compileEnhancements": true
     },
     "scripts": {
-        "build": "netlify-lambda build src",
+        "build": "netlify-lambda build netlify",
+        "serve": "netlify-lambda serve netlify",
         "test": "echo \"Error: no test specified\" && exit 1",
         "dev": "NODE_ENV=development node_modules/.bin/nodemon src/index.js"
     },
@@ -24,6 +25,7 @@
     "homepage": "https://github.com/trannguyenhung011086/news-clone#readme",
     "dependencies": {
         "ava": "^2.4.0",
+        "aws-sdk": "^2.590.0",
         "bcrypt": "^3.0.7",
         "cookie-parser": "^1.4.4",
         "cors": "^2.8.5",
@@ -35,6 +37,7 @@
         "jsonwebtoken": "^8.5.1",
         "mongoose": "^5.8.0",
         "morgan": "^1.9.1",
+        "netlify-lambda": "^1.6.3",
         "node-fetch": "^2.6.0",
         "redis": "^2.8.0",
         "serverless-http": "^2.3.0",
