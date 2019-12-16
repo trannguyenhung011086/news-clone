@@ -19,15 +19,7 @@ module.exports = {
     grantToken,
 
     verifyToken: accessToken => {
-        try {
-            return jwt.verify(accessToken, config.accessTokenSecret);
-        } catch (err) {
-            throw {
-                status: 401,
-                message: 'Unauthorized or invalid token!',
-                stack: err.stack,
-            };
-        }
+        return jwt.verify(accessToken, config.accessTokenSecret);
     },
 
     refreshToken: async ({ accessToken, refreshToken }) => {

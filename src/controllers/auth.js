@@ -1,14 +1,6 @@
 const AuthService = require('../services/auth');
 
 module.exports = {
-    activate: async (req, res, next) => {
-        try {
-            res.send('TO DO');
-        } catch (err) {
-            return next(err);
-        }
-    },
-
     sigin: async (req, res, next) => {
         try {
             const { email, password } = req.body;
@@ -22,6 +14,14 @@ module.exports = {
     logout: async (req, res, next) => {
         try {
             res.send('TO DO');
+        } catch (err) {
+            return next(err);
+        }
+    },
+
+    refreshToken: async (req, res, next) => {
+        try {
+            //
         } catch (err) {
             return next(err);
         }

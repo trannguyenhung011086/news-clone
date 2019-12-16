@@ -22,6 +22,7 @@
     },
     "homepage": "https://github.com/trannguyenhung011086/news-clone#readme",
     "dependencies": {
+        "@sendgrid/mail": "^6.4.0",
         "ava": "^2.4.0",
         "aws-sdk": "^2.590.0",
         "bcrypt": "^3.0.7",
@@ -38,6 +39,7 @@
         "node-fetch": "^2.6.0",
         "redis": "^2.8.0",
         "test-listen": "^1.1.0",
+        "uuid": "^3.3.3",
         "yup": "^0.27.0"
     },
     "devDependencies": {

@@ -1,5 +1,5 @@
 const AuthService = require('../services/auth');
-const PostService = require('../services/post');
+const UserService = require('../services/user');
 
 const getToken = req => {
     let token = req.headers['x-access-token'] || req.headers['authorization'];
@@ -12,11 +12,19 @@ module.exports = {
         if (!token) {
             return res.status(401).json({ message: 'Missing token!' });
         }
+
+        let decode;
         try {
-            AuthService.verifyToken(token);
+            decode = AuthService.verifyToken(token);
         } catch (err) {
-            return res.status(err.status).json(err);
+            return res.status(401).json({ message: 'Invalid token!' });
         }
+
+        const user = await UserService.getUserById(decode.userId);
+        if (!user.active) {
+            return res.status(401).json({ message: 'User is not active!' });
+        }
+
         next();
     },
 };
