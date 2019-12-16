@@ -3,13 +3,16 @@
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
+    "engines": {
+        "node": "10.x"
+    },
     "ava": {
         "verbose": true,
         "compileEnhancements": true
     },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "dev": "NODE_ENV=development node_modules/.bin/nodemon src/index.js"
+        "dev": "NODE_ENV=development node_modules/.bin/nodemon server/index.js"
     },
     "repository": {
         "type": "git",

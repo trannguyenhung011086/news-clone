@@ -1,0 +1,18 @@
+{
+    "version": 2,
+    "builds": [{ "src": "/api/*.js", "use": "@now/node" }],
+    "rewrites": [
+        { "source": "/", "destination": "/api/home.js" },
+        { "source": "/posts", "destination": "/api/posts.js" },
+        { "source": "/posts(/.*)", "destination": "/api/posts.js" },
+        { "source": "/user(/.*)", "destination": "/api/user.js" },
+        { "source": "/auth(/.*)", "destination": "/api/auth.js" }
+    ],
+    "trailingSlash": false,
+    "cleanUrls": true,
+    "env": {
+        "IS_NOW": "true",
+        "SENDGRID_API_KEY": "@sendgrid_api_key",
+        "DATABASE": "@database"
+    }
+}
