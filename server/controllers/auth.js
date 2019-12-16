@@ -21,7 +21,8 @@ module.exports = {
 
     refreshToken: async (req, res, next) => {
         try {
-            //
+            const { accessToken, refreshToken } = req.body;
+            await AuthService.refreshToken({ accessToken, refreshToken });
         } catch (err) {
             return next(err);
         }
