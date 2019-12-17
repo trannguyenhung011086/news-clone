@@ -15,6 +15,9 @@
         "SENDGRID_API_KEY": "@sendgrid_api_key",
         "DATABASE": "@database",
         "ACCESSTOKENSECRET": "@access-token",
-        "REFRESHTOKENSECRET": "@refresh-token"
+        "REFRESHTOKENSECRET": "@refresh-token",
+        "REDIS_HOST": "@redis-host",
+        "REDIS_PORT": "@redis-port",
+        "REDIS_PASSWORD": "@redis-password"
     }
 }

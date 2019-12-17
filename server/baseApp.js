@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 
 const mongo = require('./mongo');
+const redis = require('./redis');
 const app = express();
 
 app.use(cors());

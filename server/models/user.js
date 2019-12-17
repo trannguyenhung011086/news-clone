@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const uuidv4 = require('uuid/v4');
+const config = require('../config');
 
 const UserSchema = new mongoose.Schema({
     username: {
@@ -21,11 +23,14 @@ const UserSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
-    activeLink: String,
     createdAt: {
         type: Date,
         default: Date.now,
     },
+});
+
+UserSchema.virtual('activeLink').get(function() {
+    return `${config.baseUrl}/user/${this._id.toString()}/${uuidv4()}/active`;
 });
 
 module.exports = mongoose.model('User', UserSchema);
