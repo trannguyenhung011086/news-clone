@@ -18,7 +18,7 @@ myEmitter.on('error', err => {
 });
 
 redisClient.on('message', async (channel, message) => {
-    console.log('Received data :' + message);
+    console.log(channel, 'Received data :' + message);
     const { username, email, url } = JSON.parse(message);
     await mailer.sendActiveEmail({ username, email, url });
 });

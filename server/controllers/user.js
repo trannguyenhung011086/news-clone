@@ -15,6 +15,7 @@ module.exports = {
                 email,
                 id: user._id,
                 active: user.active,
+                activeLink: user.activeLink,
             });
         } catch (err) {
             return next(err);

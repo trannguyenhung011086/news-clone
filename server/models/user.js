@@ -23,14 +23,19 @@ const UserSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    welcome: {
+        type: Boolean,
+        default: false,
+    },
     createdAt: {
         type: Date,
         default: Date.now,
     },
 });
 
+const uuid = uuidv4();
 UserSchema.virtual('activeLink').get(function() {
-    return `${config.baseUrl}/user/${this._id.toString()}/${uuidv4()}/active`;
+    return `${config.baseUrl}/user/${this._id.toString()}/${uuid}/active`;
 });
 
 module.exports = mongoose.model('User', UserSchema);

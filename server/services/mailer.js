@@ -22,4 +22,23 @@ module.exports = {
             console.error('Cannot send email!\n', err);
         }
     },
+
+    sendWelcomeEmail: async ({ username, email }) => {
+        try {
+            const msg = {
+                to: email,
+                from: 'learn-svelte@example.com',
+                subject: 'Welcome',
+                text: `Hi ${username}, Welcome to our site.\nThank you!`,
+                html: `<p>Hi <strong>${username}</strong>,</p> 
+                <p>Welcome to our site.</p>
+                <p>Thank you!</p>`,
+            };
+            const send = await mailer.send(msg);
+            console.log('Welcome email is sent to ' + email);
+            return send;
+        } catch (err) {
+            console.error('Cannot send email!\n', err);
+        }
+    },
 };

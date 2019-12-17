@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const UserModel = require('../models/user');
-// const myEmitter = require('../events/mailer');
+const myEmitter = require('../events/mailer');
 const redisClient = require('../redis');
 
 const validateRegister = async ({ username, email, password }) => {
@@ -65,13 +65,17 @@ module.exports = {
         payload.password = await bcrypt.hash(password, 10);
         let newUser = await UserModel.create(payload);
 
-        // const send = myEmitter.emit('register', { username, email, url: newUser.activeLink });
-        // if (!send) myEmitter.emit('error');
+        const send = myEmitter.emit('register', {
+            username,
+            email,
+            url: newUser.activeLink,
+        });
+        if (!send) myEmitter.emit('error');
 
-        redisClient.publish(
-            'register',
-            JSON.stringify({ username, email, url: newUser.activeLink }),
-        );
+        // redisClient.publish(
+        //     'register',
+        //     JSON.stringify({ username, email, url: newUser.activeLink }),
+        // );
 
         return newUser;
     },
@@ -85,8 +89,13 @@ module.exports = {
             throw new Error('Invalid active code!');
         }
 
+        // const welcome = require('../events/welcomeEmail');
+        // await welcome(user);
+
         user.active = true;
+        // user.welcome = true;
         await user.save();
+
         return { userId: user._id, active: user.active };
     },
 
@@ -100,21 +109,21 @@ module.exports = {
             throw new Error('User already active!');
         }
 
-        // const send = myEmitter.emit('resend', {
-        //     username: user.username,
-        //     email: user.email,
-        //     url: user.activeLink,
-        // });
-        // if (!send) myEmitter.emit('error');
+        const send = myEmitter.emit('resend', {
+            username: user.username,
+            email: user.email,
+            url: user.activeLink,
+        });
+        if (!send) myEmitter.emit('error');
 
-        redisClient.publish(
-            'resend',
-            JSON.stringify({
-                username: user.username,
-                email: user.email,
-                url: user.activeLink,
-            }),
-        );
+        // redisClient.publish(
+        //     'resend',
+        //     JSON.stringify({
+        //         username: user.username,
+        //         email: user.email,
+        //         url: user.activeLink,
+        //     }),
+        // );
 
         return { send: true, activeLink: user.activeLink };
     },
