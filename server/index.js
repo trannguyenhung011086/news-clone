@@ -1,7 +1,9 @@
 const config = require('./config');
 
-const mongo = require('./mongo');
-const redis = require('./redis');
+require('./mongo');
+require('./redis');
+require('./jobs/agenda');
+
 const app = require('./app');
 
 app.listen(config.port, () => {

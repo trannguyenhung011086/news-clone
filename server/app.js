@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-const morgan = require('morgan');
 
 const errorHandler = require('./middlewares/handleError');
 
@@ -18,6 +17,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 if (process.env.NODE_ENV === 'development') {
+    const morgan = require('morgan');
     app.use(new morgan('dev'));
 }
 
