@@ -6,7 +6,8 @@
         { "source": "/posts", "destination": "/api/posts.js" },
         { "source": "/posts(/.*)", "destination": "/api/posts.js" },
         { "source": "/user(/.*)", "destination": "/api/user.js" },
-        { "source": "/auth(/.*)", "destination": "/api/auth.js" }
+        { "source": "/auth(/.*)", "destination": "/api/auth.js" },
+        { "source": "/agenda", "destination": "/api/agenda.js" }
     ],
     "trailingSlash": false,
     "cleanUrls": true,
@@ -18,6 +19,8 @@
         "REFRESHTOKENSECRET": "@refresh-token",
         "REDIS_HOST": "@redis-host",
         "REDIS_PORT": "@redis-port",
-        "REDIS_PASSWORD": "@redis-password"
+        "REDIS_PASSWORD": "@redis-password",
+        "BASIC_USERNAME": "@basic-username",
+        "BASIC_PASSWORD": "@basic-password"
     }
 }

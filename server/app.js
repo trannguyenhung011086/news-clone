@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
+const authHandler = require('./middlewares/auth');
 const errorHandler = require('./middlewares/handleError');
 
 const homeRoute = require('./routes/home');
@@ -25,6 +26,10 @@ app.use('/', homeRoute);
 app.use('/auth', authRoute);
 app.use('/user', userRoute);
 app.use('/posts', postRoute);
+
+const agenda = require('./jobs/agenda');
+const agendash = require('agendash');
+app.use('/agenda', authHandler.checkBasic, agendash(agenda));
 
 app.use('*', (req, res) => {
     res.status(404).json({ message: 'Not found!' });

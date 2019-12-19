@@ -4,7 +4,11 @@ const config = require('../config');
 const mailer = require('../services/mailer');
 
 const agenda = new Agenda({
-    db: { address: config.database, collection: 'agendaJobs' },
+    db: {
+        address: config.database,
+        collection: 'agendaJobs',
+    },
+    processEvery: '30 seconds',
 });
 
 agenda

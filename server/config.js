@@ -20,4 +20,8 @@ module.exports = {
         port: process.env.REDIS_PORT || '6379',
         password: process.env.REDIS_PASSWORD,
     },
+    basic: {
+        username: process.env.BASIC_USERNAME,
+        password: process.env.BASIC_PASSWORD,
+    },
 };

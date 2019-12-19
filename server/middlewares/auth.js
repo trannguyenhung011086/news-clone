@@ -1,3 +1,4 @@
+const config = require('../config');
 const AuthService = require('../services/auth');
 const UserService = require('../services/user');
 
@@ -7,6 +8,35 @@ const getToken = req => {
 };
 
 module.exports = {
+    checkBasic: async (req, res, next) => {
+        res.setHeader('WWW-Authenticate', 'Basic realm="NodeJS"');
+
+        if (
+            !req.headers.authorization ||
+            !req.headers.authorization.includes('Basic')
+        ) {
+            return res
+                .status(401)
+                .json({ message: 'Missing basic authorization!' });
+        }
+
+        const base64Creds = req.headers.authorization.split(' ')[1] || '';
+        const [username, password] = Buffer.from(base64Creds, 'base64')
+            .toString()
+            .split(':');
+
+        if (
+            username !== config.basic.username ||
+            password !== config.basic.password
+        ) {
+            return res
+                .status(401)
+                .json({ message: 'Invalid basic authorization!' });
+        }
+
+        next();
+    },
+
     isUser: async (req, res, next) => {
         const token = getToken(req);
         if (!token) {
