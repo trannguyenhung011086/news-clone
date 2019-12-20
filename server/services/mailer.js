@@ -19,7 +19,7 @@ module.exports = {
             console.log('Active email is sent to ' + email);
             return send;
         } catch (err) {
-            console.error('Cannot send email!\n', err);
+            console.error(`Cannot send active email to ${email}`, err);
         }
     },
 
@@ -38,7 +38,7 @@ module.exports = {
             console.log('Welcome email is sent to ' + email);
             return send;
         } catch (err) {
-            console.error('Cannot send email!\n', err);
+            console.error(`Cannot send welcome email to ${email}`, err);
         }
     },
 };

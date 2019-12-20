@@ -6,7 +6,7 @@ const AuthMiddleware = require('../middlewares/auth');
 const PostController = require('../controllers/post');
 const CommentController = require('../controllers/comment');
 
-router.get('/', PostController.getPosts);
+router.get('/', AuthMiddleware.isUser, PostController.getPosts);
 router.get('/:postId', PostController.getPostById);
 
 router.post('/create', AuthMiddleware.isUser, PostController.createPost);

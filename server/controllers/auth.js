@@ -13,7 +13,9 @@ module.exports = {
 
     logout: async (req, res, next) => {
         try {
-            res.send('TO DO');
+            const { token, userId } = req.body;
+            await AuthService.logout({ token, userId });
+            res.json({ logout: true, userId });
         } catch (err) {
             return next(err);
         }

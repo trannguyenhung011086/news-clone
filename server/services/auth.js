@@ -15,12 +15,13 @@ const grantToken = ({ userId, username }) => {
     return { userId, accessToken, refreshToken };
 };
 
+const verifyToken = accessToken => {
+    return jwt.verify(accessToken, config.accessTokenSecret);
+};
+
 module.exports = {
     grantToken,
-
-    verifyToken: accessToken => {
-        return jwt.verify(accessToken, config.accessTokenSecret);
-    },
+    verifyToken,
 
     refreshToken: async ({ accessToken, refreshToken }) => {
         const access = jwt.verify(accessToken, config.accessTokenSecret);
@@ -58,5 +59,19 @@ module.exports = {
         }
 
         return await grantToken({ userId: user._id, username: user.username });
+    },
+
+    logout: async ({ token, userId }) => {
+        const decode = verifyToken(token);
+        if (decode.userId != userId) {
+            throw new Error('User not found!');
+        }
+
+        const { promisify } = require('util');
+        const redis = require('../redis');
+        const setAsync = promisify(redis.set).bind(redis);
+
+        await setAsync(userId, token, 'EX', 600);
+        return true;
     },
 };

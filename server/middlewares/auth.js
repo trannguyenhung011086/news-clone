@@ -7,6 +7,13 @@ const getToken = req => {
     return token ? token.replace('Bearer ', '') : null;
 };
 
+const getBlacklist = async ({ userId }) => {
+    const { promisify } = require('util');
+    const redis = require('../redis');
+    const getAsync = promisify(redis.get).bind(redis);
+    return await getAsync(userId);
+};
+
 module.exports = {
     checkBasic: async (req, res, next) => {
         res.setHeader('WWW-Authenticate', 'Basic realm="NodeJS"');
@@ -48,6 +55,11 @@ module.exports = {
             decode = AuthService.verifyToken(token);
         } catch (err) {
             return res.status(401).json({ message: 'Invalid token!' });
+        }
+
+        const blacklist = await getBlacklist({ userId: decode.userId });
+        if (blacklist === token) {
+            return res.status(401).json({ message: 'User already log out!' });
         }
 
         const user = await UserService.getUserById(decode.userId);
