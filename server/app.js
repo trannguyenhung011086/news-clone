@@ -1,31 +1,23 @@
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-
-const authHandler = require('./middlewares/auth');
-const errorHandler = require('./middlewares/handleError');
-
-const homeRoute = require('./routes/home');
-const authRoute = require('./routes/auth');
-const userRoute = require('./routes/user');
-const postRoute = require('./routes/post');
+const morgan = require('morgan');
 
 const app = express();
 
+app.use(new morgan('dev'));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-if (process.env.NODE_ENV === 'development') {
-    const morgan = require('morgan');
-    app.use(new morgan('dev'));
-}
+const authHandler = require('./middlewares/auth');
+const errorHandler = require('./middlewares/handleError');
 
-app.use('/', homeRoute);
-app.use('/auth', authRoute);
-app.use('/user', userRoute);
-app.use('/posts', postRoute);
+app.use('/', require('./routes/home'));
+app.use('/auth', require('./routes/auth'));
+app.use('/user', require('./routes/user'));
+app.use('/posts', require('./routes/post'));
 
 const agenda = require('./jobs/agenda');
 const agendash = require('agendash');

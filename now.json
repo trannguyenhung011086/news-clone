@@ -12,7 +12,7 @@
     ],
     "cleanUrls": false,
     "env": {
-        "IS_NOW": "true",
+        "NODE_ENV": "production",
         "SENDGRID_API_KEY": "@sendgrid_api_key",
         "DATABASE": "@database",
         "ACCESSTOKENSECRET": "@access-token",
@@ -21,6 +21,7 @@
         "REDIS_PORT": "@redis-port",
         "REDIS_PASSWORD": "@redis-password",
         "BASIC_USERNAME": "@basic-username",
-        "BASIC_PASSWORD": "@basic-password"
+        "BASIC_PASSWORD": "@basic-password",
+        "SENTRY": "@sentry"
     }
 }

@@ -1,5 +1,6 @@
 const config = require('./config');
 
+require('./sentry');
 require('./mongo');
 require('./redis');
 require('./jobs/agenda');

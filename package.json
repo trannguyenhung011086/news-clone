@@ -26,6 +26,7 @@
     "homepage": "https://github.com/trannguyenhung011086/news-clone#readme",
     "dependencies": {
         "@sendgrid/mail": "^6.4.0",
+        "@sentry/node": "^5.10.2",
         "agenda": "^2.3.0",
         "agendash": "^1.0.0",
         "ava": "^2.4.0",

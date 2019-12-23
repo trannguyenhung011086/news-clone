@@ -24,4 +24,5 @@ module.exports = {
         username: process.env.BASIC_USERNAME,
         password: process.env.BASIC_PASSWORD,
     },
+    sentry: process.env.SENTRY,
 };
