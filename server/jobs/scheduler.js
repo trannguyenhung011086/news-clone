@@ -10,7 +10,7 @@ module.exports = {
     },
 
     scheduleResendActiveEmail: async ({ username, email, url }) => {
-        await agenda.schedule('in 1 second', 'resend', {
+        await agenda.schedule('in 2 seconds', 'resend', {
             username,
             email,
             url,

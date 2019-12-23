@@ -8,7 +8,7 @@ const agenda = new Agenda({
         address: config.database,
         collection: 'agendaJobs',
     },
-    processEvery: '30 seconds',
+    // processEvery: '30 seconds',
 });
 
 agenda

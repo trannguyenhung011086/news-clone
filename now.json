@@ -12,6 +12,8 @@
     ],
     "cleanUrls": false,
     "env": {
+        "BASEURL": "https://news-clone.trannguyenhung011086.now.sh",
+        "PORT": "3000",
         "NODE_ENV": "production",
         "SENDGRID_API_KEY": "@sendgrid_api_key",
         "DATABASE": "@database",
