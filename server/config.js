@@ -1,7 +1,8 @@
 require('dotenv').config();
 
 module.exports = {
-    baseUrl: process.env.BASEURL || `http://localhost:${process.env.PORT}`,
+    baseUrl:
+        process.env.BASEURL || `http://localhost:${process.env.PORT || '3000'}`,
     mongoOptions: {
         useNewUrlParser: true,
         useCreateIndex: true,

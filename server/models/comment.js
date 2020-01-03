@@ -39,4 +39,8 @@ CommentSchema.virtual('replies', {
     foreignField: 'parent',
 });
 
+CommentSchema.index({
+    content: 'text',
+});
+
 module.exports = mongoose.model('Comment', CommentSchema);

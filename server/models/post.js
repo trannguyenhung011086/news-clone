@@ -37,4 +37,17 @@ PostSchema.virtual('commentsCount', {
     count: true,
 });
 
+PostSchema.index(
+    {
+        title: 'text',
+        content: 'text',
+    },
+    {
+        weights: {
+            title: 5,
+            content: 1,
+        },
+    },
+);
+
 module.exports = mongoose.model('Post', PostSchema);

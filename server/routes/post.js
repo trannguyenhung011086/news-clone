@@ -7,32 +7,33 @@ const PostController = require('../controllers/post');
 const CommentController = require('../controllers/comment');
 
 router.get('/', PostController.getPosts);
+router.get('/search', PostController.searchPost);
 router.get('/:postId', PostController.getPostById);
 
-router.post('/create', AuthMiddleware.isUser, PostController.createPost);
-router.put('/:postId/update', AuthMiddleware.isUser, PostController.updatePost);
+router.post('/', AuthMiddleware.isUser, PostController.createPost);
+router.put('/:postId', AuthMiddleware.isUser, PostController.updatePost);
 router.delete('/:postId', AuthMiddleware.isUser, PostController.deletePost);
 
 router.get('/:postId/comments', CommentController.getPostComments);
 
 router.post(
-    '/:postId/comments/create',
+    '/:postId/comments',
     AuthMiddleware.isUser,
     CommentController.createComment,
 );
 router.put(
-    '/:postId/:commentId/update',
+    '/:postId/:commentId',
     AuthMiddleware.isUser,
     CommentController.updateComment,
 );
 
 router.post(
-    '/:parentId/comments/create',
+    '/:parentId/comments',
     AuthMiddleware.isUser,
     CommentController.createComment,
 );
 router.put(
-    '/:parentId/:commentId/update',
+    '/:parentId/:commentId',
     AuthMiddleware.isUser,
     CommentController.updateComment,
 );

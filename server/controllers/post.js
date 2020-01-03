@@ -81,4 +81,14 @@ module.exports = {
             next(err);
         }
     },
+
+    searchPost: async (req, res, next) => {
+        try {
+            const term = req.query.q;
+            const result = await PostService.searchPost(term);
+            res.json({ data: result });
+        } catch (err) {
+            next(err);
+        }
+    },
 };

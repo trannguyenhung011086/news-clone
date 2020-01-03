@@ -92,4 +92,10 @@ module.exports = {
         post.score -= 1;
         return await post.save();
     },
+
+    searchPost: async term => {
+        return await PostModel.find({
+            $text: { $search: term },
+        });
+    },
 };

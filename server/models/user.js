@@ -38,4 +38,9 @@ UserSchema.virtual('activeLink').get(function() {
     return `${config.baseUrl}/user/${this._id.toString()}/${uuid}/active`;
 });
 
+UserSchema.index({
+    username: 'text',
+    email: 'text',
+});
+
 module.exports = mongoose.model('User', UserSchema);
